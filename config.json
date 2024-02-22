@@ -1,0 +1,9 @@
+{
+    "BASE_URL": "https://talmudfinder-2-0.loadbalancer.dicta.org.il/TalmudFinder/api",
+    "EMAIL": {
+        "SENDER": "dicta@dicta.org.il",
+        "SUBJECT": "Dicta Search Results",
+        "REGION": "us-east-1"
+    } 
+}
+  
