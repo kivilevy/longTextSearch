@@ -1,9 +1,9 @@
 import jschardet from "jschardet";
 import decompress from "decompress";
-import { ERROR_MESSAGES } from "./messagesObj.js";
+import { MESSAGES } from "./messagesObj.js";
 import fetch from "node-fetch";
 
-const { BAD_RESPONSE, FILE_ERR, NO_TEXT_FOUND } = ERROR_MESSAGES;
+const { BAD_RESPONSE, FILE_ERR, NO_TEXT_FOUND } = MESSAGES;
 
 export const getTextFromUrl = async (req, res, url) => {
   const response = await fetch(url);
