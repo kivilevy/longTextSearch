@@ -14,8 +14,7 @@ export const validateAndProcessRequest = async (req, res, next) => {
   try {
     if (!validator.isEmail(email))
       return res.status(400).send({ error: INVALID_EMAIL });
-    // if (url && url.startsWith("https://upload.loadbalancer.dicta.org.il/"))
-    if (url && url.startsWith("http://localhost:5000"))
+    if (url && url.startsWith("https://upload.loadbalancer.dicta.org.il/"))
       await getTextFromUrl(req, res, url);
     else return res.status(400).send({ error: NO_TEXT_FOUND });
     if (!res.headersSent) {
