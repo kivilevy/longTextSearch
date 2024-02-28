@@ -4,7 +4,7 @@ import express from "express";
 import {
   validateAndProcessRequest,
   handleProcessedRequest,
-} from "./handelingRequest.js";
+} from "./handelsRequest.js";
 
 dotenv.config();
 
