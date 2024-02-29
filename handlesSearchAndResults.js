@@ -1,6 +1,6 @@
 import fs from "fs";
 import { setIndex } from "./setsResultsIndex.js";
-import { generatePdfAndReturnPath } from "./generatesPdfAndReturnsPath.js"
+import { generatePdfAndReturnPath } from "./generatesPdfAndReturnsPath.js";
 
 const config = JSON.parse(fs.readFileSync("./config.json", "utf-8"));
 const { BASE_URL } = config;
@@ -16,11 +16,20 @@ export const handleSearchAndResults = async (text, reqBody) => {
     for (const [index, { overlap, chunk }] of chunks.entries()) {
       const chunkResults = await searchChunk(overlap + chunk, reqBody);
       pagesArray.push(
-        insertFootnotes(overlap, chunk, index + 1, chunkResults, matchDetailsArray)
+        insertFootnotes(
+          overlap,
+          chunk,
+          index + 1,
+          chunkResults,
+          matchDetailsArray
+        )
       );
     }
-    const categorizedCitations = await setIndex(matchDetailsArray)
-    const pdfPath = await generatePdfAndReturnPath(pagesArray, categorizedCitations);
+    const categorizedCitations = await setIndex(matchDetailsArray);
+    const pdfPath = await generatePdfAndReturnPath(
+      pagesArray,
+      categorizedCitations
+    );
     return pdfPath;
   } catch (error) {
     return null;

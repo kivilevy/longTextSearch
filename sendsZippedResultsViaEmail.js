@@ -35,10 +35,11 @@ export const sendEmail = async (resultsFilePath, recipient, invalidFiles) => {
 const zipResults = async (resultsFilePath, recipient) => {
   const zip = new JSZip();
 
-  resultsFilePath.forEach(({ path, filename }) => {
-    if (path == null) sendErrMsgEmail(recipient, filename);
+  resultsFilePath.forEach(({ filename, pdfFilePath }) => {
+    if (typeof pdfFilePath !== "string")
+      return sendErrMsgEmail(recipient, filename);
     else {
-      const pdfData = fs.readFileSync(path);
+      const pdfData = fs.readFileSync(pdfFilePath);
       zip.file(`${filename}.pdf`, pdfData);
     }
   });
@@ -96,8 +97,8 @@ const sendErrMsgEmail = async (recipient, filename) => {
 };
 
 const deleteFiles = (resultsFilePath) => {
-  resultsFilePath.forEach(({ path }) => {
-    fs.unlink(path, (err) => {
+  resultsFilePath.forEach(({ pdfFilePath }) => {
+    fs.unlink(pdfFilePath, (err) => {
       if (err) throw err;
     });
   });

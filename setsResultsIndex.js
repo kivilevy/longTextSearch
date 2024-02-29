@@ -10,11 +10,11 @@ export const setIndex = async (matchDetailsArray) => {
     }
     return citation;
   });
-  const sortedCitations =  sortCitationArray(matchDetailsArray);
+  const sortedCitations = sortCitationArray(matchDetailsArray);
   return categorizeCitations(sortedCitations);
 };
 
-const sortCitationArray =  (matchDetailsArray) => {
+const sortCitationArray = (matchDetailsArray) => {
   return matchDetailsArray.sort((a, b) => {
     const [, , bookNameA, chapterA, verseA] = a.verseId.split(".");
     const [, , bookNameB, chapterB, verseB] = b.verseId.split(".");
@@ -28,7 +28,7 @@ const sortCitationArray =  (matchDetailsArray) => {
   });
 };
 
-const categorizeCitations =  (sortedCitations) => {
+const categorizeCitations = (sortedCitations) => {
   const categorizedCitations = new Map();
 
   for (const citation of sortedCitations) {
