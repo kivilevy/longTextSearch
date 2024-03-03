@@ -1,7 +1,10 @@
 import fs from "fs";
 import PDFDocument from "pdfkit";
 
-export const generatePdfAndReturnPath = async (pagesArraay, categorizedIndex) => {
+export const generatePdfAndReturnPath = async (
+  pagesArraay,
+  categorizedIndex
+) => {
   return new Promise((resolve, reject) => {
     const timestamp = Date.now();
     const pdfPath = `./results/results_${timestamp}.pdf`;
@@ -37,25 +40,32 @@ export const generatePdfAndReturnPath = async (pagesArraay, categorizedIndex) =>
     doc.font("NotoSansHebrew").fontSize(12).text(`INDEX`, { align: "center" });
     doc.moveDown();
     for (const [mainCategory, subCategories] of categorizedIndex) {
-      doc.fontSize(14).text(mainCategory);
-      for (const [subCategory, books] of subCategories) {
-        doc.fontSize(12).text(`  ${subCategory}`);
-        for (const [bookName, citations] of Object.entries(books)) {
-          doc.fontSize(12).text(`    ${bookName}`);
+      doc.moveDown();
+      doc.fontSize(16).text(`${mainCategory}`, { align: "right" });
+      for (const [_, books] of subCategories) {
+        for (const [_, citations] of Object.entries(books)) {
+          const printedCitations = new Set();
           citations.forEach((citation) => {
-            doc
-              .fontSize(10)
-              .text(`${citation.verseDispHeb}`, {
+            if (!printedCitations.has(citation.verseDispHeb)) {
+              printedCitations.add(citation.verseDispHeb);
+              doc.moveDown();
+              doc.fontSize(10).text(`${citation.verseDispHeb}`, {
                 align: "right",
                 features: ["rtla"],
-              })
+              });
+            }
+            doc
+              .fontSize(8)
               .text(
                 `  [${citation.footnoteNumber}] ${citation.chunckNumber} עמוד`,
-                { align: "right" }
+                {
+                  align: "right",
+                }
               );
           });
         }
       }
+      doc.moveDown();
     }
     doc.end();
   });

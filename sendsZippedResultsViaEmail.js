@@ -14,8 +14,8 @@ const {
 const sesClient = new SESClient({
   region: REGION,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    accessKeyId,
+    secretAccessKey,
   },
 });
 
@@ -68,7 +68,7 @@ const formRawEmail = (recipient, zipFile, invalidFilesReport) => {
   });
   attachmentPart.header(
     "Content-Disposition",
-    `attachment; filename ="Dicta-Results.zip"`
+    `attachment; filename ="Dicta-citation-finder-results.zip"`
   );
   msg.body.push(attachmentPart);
   return msg.toString();

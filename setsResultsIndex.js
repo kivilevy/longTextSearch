@@ -33,7 +33,8 @@ const categorizeCitations = (sortedCitations) => {
 
   for (const citation of sortedCitations) {
     const { verseId } = citation;
-    const [mainCategory, subCategory, bookName] = verseId.split(".");
+    const [mainCategoryEng, subCategory, bookName] = verseId.split(".");
+    const mainCategory = fixToHebrewName(mainCategoryEng);
     if (!categorizedCitations.has(mainCategory))
       categorizedCitations.set(mainCategory, new Map());
     const mainCatMap = categorizedCitations.get(mainCategory);
@@ -43,4 +44,11 @@ const categorizeCitations = (sortedCitations) => {
     subCatMap[bookName].push(citation);
   }
   return categorizedCitations;
+};
+
+const fixToHebrewName = (mainCategoryEng) => {
+  if (mainCategoryEng === "Tanakh") return "תנך";
+  if (mainCategoryEng === "Mishnah") return "משנה";
+  if (mainCategoryEng === "TalmudBavli") return "תלמוד";
+  return mainCategoryEng;
 };
